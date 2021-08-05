@@ -224,12 +224,12 @@ class FiscRule ():
     # overall
     def disc_cap_alloc(self, theta_bar):
         alloc = np.empty(len(self.theta_grid))
-        theta_c = self.theta_c_F(theta_bar)
+        theta_p = self.theta_p(theta_bar)
         for i in range(len(self.theta_grid)):
-            if self.theta_grid[i] <= theta_c:
+            if self.theta_grid[i] <= theta_p:
                 alloc[i] = self.discretionary(self.theta_grid[i])
             else:
-                alloc[i] = self.discretionary(theta_c)
+                alloc[i] = self.discretionary(theta_p)
         return alloc
 
     # overall
@@ -251,10 +251,10 @@ class FiscRule ():
         for i in range(len(self.theta_grid)):
             if self.theta_grid[i] <= theta_n:
                 alloc[i] = self.discretionary(self.theta_grid[i])        
-            if self.theta_grid[i] > theta_n and self.theta_grid[i] <= theta_xc:    
+            if self.theta_grid[i] > theta_n and self.theta_grid[i] <= theta_xp:    
                 alloc[i] = self.costly_disc(self.theta_grid[i])        
-            if self.theta_grid[i] > theta_xc:
-                alloc[i] = self.costly_disc(theta_xc)        
+            if self.theta_grid[i] > theta_xp:
+                alloc[i] = self.costly_disc(theta_xp)        
         return alloc
     
     # overall
@@ -272,14 +272,14 @@ class FiscRule ():
     def exempt_costlydisc_prohib(self):
         alloc = np.empty(len(self.theta_grid))
         theta_x_ = self.theta_x()
-        theta_xc_ = self.theta_xc(self.theta_bar)
+        theta_xp_ = self.theta_xp(self.theta_bar)
         for i in range(len(self.theta_grid)):
             if self.theta_grid[i] <= theta_x_:
                 alloc[i] = self.costly_disc(theta_x_)
-            if self.theta_grid[i] > theta_x_ and self.theta_grid[i] <= theta_xc_:
+            if self.theta_grid[i] > theta_x_ and self.theta_grid[i] <= theta_xp_:
                 alloc[i] = self.costly_disc(self.theta_grid[i])
-            if self.theta_grid[i] > theta_xc_:
-                alloc[i] = self.costly_disc(theta_xc_)
+            if self.theta_grid[i] > theta_xp_:
+                alloc[i] = self.costly_disc(theta_xp_)
         return alloc
 
 # Money burning    
