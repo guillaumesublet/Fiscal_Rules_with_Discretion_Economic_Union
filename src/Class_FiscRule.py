@@ -117,6 +117,11 @@ class FiscRule ():
             E_theta = gengamma.mean(self.a_gamma, self.c_weibull, loc = self.grid_min)                        
         return E_theta
     
+    def mean_deficit(self):
+        'Returns the expected deficit (in percentage of fiscal revenues) from the discretionary allocation'
+        E_deficit = integrate.quad(lambda x: self.discretionary(x) * self.f(x), self.grid_min, self.theta_bar)
+        return (E_deficit[0] - self.T)/self.T
+    
 # Thresholds
     def theta_p(self, theta_bar):
         'Returns theta_p the threshold above which the prohibitive sanctions are constraining'
@@ -170,7 +175,7 @@ class FiscRule ():
 
     # overall
     def state_contingent_alloc(self):
-        'Returns an array with the first best allocation g_d on the grid'
+        'Returns an array with the first best allocation g^* on the grid'
         alloc = np.empty(len(self.theta_grid))
         for i in range(len(self.theta_grid)):
             alloc[i] = self.first_best(self.theta_grid[i])
@@ -186,7 +191,7 @@ class FiscRule ():
     
     # overall
     def costly_disc_alloc(self):
-        'Returns an array with the costly discretion allocation g_e on the grid'
+        'Returns an array with the costly discretion allocation g_n on the grid'
         alloc = np.empty(len(self.theta_grid))
         for i in range(len(self.theta_grid)):
             alloc[i] = self.costly_disc(self.theta_grid[i])
@@ -223,6 +228,7 @@ class FiscRule ():
 
     # overall
     def disc_cap_alloc(self, theta_bar):
+        'Returns the discretion and cap allocation g_d^p'
         alloc = np.empty(len(self.theta_grid))
         theta_p = self.theta_p(theta_bar)
         for i in range(len(self.theta_grid)):
@@ -234,6 +240,7 @@ class FiscRule ():
 
     # overall
     def disc_costlydisc(self):
+        'Returns the discretion and costly discretion allocation g_d^n'
         alloc = np.empty(len(self.theta_grid))
         theta_n = self.theta_n()
         for i in range(len(self.theta_grid)):
@@ -245,6 +252,7 @@ class FiscRule ():
 
     # overall    
     def disc_costlydisc_prohib(self):
+        'Returns the discretion, costly discretion and cap allocation g_d^{np}'
         alloc = np.empty(len(self.theta_grid))
         theta_n = self.theta_n()
         theta_xp = self.theta_xp(self.theta_bar)
@@ -259,6 +267,7 @@ class FiscRule ():
     
     # overall
     def exempt_costlydisc(self):
+        'Returns the exemption and costly discretion allocation g_x^n'
         alloc = np.empty(len(self.theta_grid))
         theta_x = self.theta_x()
         for i in range(len(self.theta_grid)):
@@ -270,6 +279,7 @@ class FiscRule ():
 
     # overall
     def exempt_costlydisc_prohib(self):
+        'Returns the exemption, costly discretion and cap allocation g_x^p'        
         alloc = np.empty(len(self.theta_grid))
         theta_x_ = self.theta_x()
         theta_xp_ = self.theta_xp(self.theta_bar)
@@ -300,17 +310,18 @@ class FiscRule ():
         return (self.omega + self.R * (self.T - g))**(-self.eta)
 
     def Delta(self, g):
-        'Wedge which is the fiscal need of the government that spending g fulfills'
+        'Returns the wedge Delta (which is the fiscal need of the government that spending g fulfills)'
         A = self.beta * self.delta * self.R * self.W_prime(g)
         B = self.U_prime(g)
         return A/B
 
     def interp_alloc(self, theta, array):
-        'Interpolate an allocation stored in array and evaluated it at theta'
+        'Interpolate an allocation stored in array and evaluates it at theta'
         return interp(self.theta_grid, array, theta)
 
     # pointwise
     def money_burning(self, theta, array):
+        'Returns t(theta), the money burned on type theta'
         A = theta * self.U(self.interp_alloc(theta, array)) + self.beta * self.delta * self.W(self.interp_alloc(theta, array))
         B = self.grid_min * self.U(array[0]) + self.beta * self.delta * self.W(array[0])
         integral = integrate.quad(lambda x: self.U(self.interp_alloc(x, array)), self.grid_min, theta)
@@ -318,7 +329,7 @@ class FiscRule ():
 
     def tau(self, g, array):
         "utility sanction as a function of spending inferred from money burning as follows tau(g) = t(g^{-1}(g))"
-        "WARNING: it is useful only when the allocation has a well defined inverse"
+        "WARNING: the allocation must have a well-defined inverse"
         theta = brentq(lambda x: self.interp_alloc(x, array) - g, self.grid_min, self.grid_max)
         return self.money_burning(theta, array)
     
@@ -418,7 +429,3 @@ class FiscRule ():
         fig, ax = plt.subplots(figsize=(15,6))
         ax.plot(self.theta_grid, array, lw=2, alpha=0.6, color='k')
         return plt.show()
-        
-    def mean_deficit(self):
-        E_deficit = integrate.quad(lambda x: self.discretionary(x) * self.f(x), self.grid_min, self.theta_bar)
-        return (E_deficit[0] - self.T)/self.T
