@@ -7,6 +7,7 @@ The code is in [Python](https://www.python.org).
 
 Structure of the repository:
 ----------------------------
+* `Class builder for Fiscal Rules with Discretion.ipynb` is a Jupyter notebook with the main equations and the code to generate the source code in `src`
 * `src` contains the source code which defines the class Class_FiscRule.py
 * `Execution_small_open_economy.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 1
 * `Execution_economic_union.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 2
