@@ -16,6 +16,6 @@ To run the code:
 ----------------
 The [QuantEcon](https://quantecon.org/quantecon-py/) library is needed for the interpolation routine. The core Python library is [Anaconda](https://www.anaconda.com/products/individual).
 
-The code runs in a split second on a personal computer.
+The code runs in few seconds on a personal computer.
 
 For comments and questions, please email guillaume.sublet@gmail.com.

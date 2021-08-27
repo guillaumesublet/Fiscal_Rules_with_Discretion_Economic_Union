@@ -7,7 +7,6 @@ The code is in [Python](https://www.python.org).
 
 Structure of the repository:
 ----------------------------
-* `Class builder for Fiscal Rules with Discretion.ipynb` is a Jupyter notebook with the main equations and the code to generate the source code in `src`
 * `src` contains the source code which defines the class Class_FiscRule.py
 * `Execution_small_open_economy.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 1
 * `Execution_economic_union.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 2
@@ -17,6 +16,6 @@ To run the code:
 ----------------
 The [QuantEcon](https://quantecon.org/quantecon-py/) library is needed for the interpolation routine. The core Python library is [Anaconda](https://www.anaconda.com/products/individual).
 
-The code runs in a split second on a personal computer.
+The code runs in few seconds on a personal computer.
 
 For comments and questions, please email guillaume.sublet@gmail.com.

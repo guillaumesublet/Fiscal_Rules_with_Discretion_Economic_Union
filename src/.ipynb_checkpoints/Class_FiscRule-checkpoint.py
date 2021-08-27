@@ -14,8 +14,8 @@ class FiscRule ():
     def __init__(self,
                 R = 1.04,
                 T = 1,
-                beta= 0.8,
-                delta = 0.96,
+                beta= 0.8,               # 1-beta is the degree of present bias
+                delta = 0.96,            # discount factor of the population
                 rho = 1/0.8,
                 omega = 0.98,
                 eta = 2,
@@ -149,6 +149,10 @@ class FiscRule ():
         'Returns theta_x the threshold below which the non-prohibitive sanctions are not meted out, i.e. exemption'
         return brentq(lambda x: self.func_for_theta_x(x), self.grid_min, self.grid_max*3/5)
 
+    def theta_A4(self):
+        'Returns theta_A4 the threshold in Assumption A4 when the distribution is exponential'
+        assert self.dist == 'exponential', 'Distribution is not exponential and the formula for theta_A4 is based on the exponential distribution'
+        return (1/self.lambda_exp) * (1/(1-self.beta))
      
 # Allocations
     # pointwise definition
