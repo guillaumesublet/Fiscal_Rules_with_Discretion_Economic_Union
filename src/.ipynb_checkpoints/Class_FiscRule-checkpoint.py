@@ -154,17 +154,22 @@ class FiscRule ():
         'Returns theta_A4 the threshold in Assumption A4 when the distribution is exponential'
         assert self.dist == 'exponential', 'Distribution is not exponential and the formula for theta_A4 is based on the exponential distribution'
         return (1/self.lambda_exp) * ((1 + (self.rho - 1) * self.beta)/(1-self.beta))
+
+    def elasticity_density_mix(self, theta):
+        'Returns the elasticity of the pdf of the mixture distribution F_a'
+        assert self.dist == 'mixture' or 'trunc_mixture', 'Distribution is not F_a'
+        return - (1-self.a_mixture) * self.gamma * self.invElasticity(theta) - 1/self.invElasticity(theta)
     
     def theta_A4_mix(self):
         'Returns theta_A4 the threshold in Assumption A4 when the distribution is F_a'
-        assert self.dist == 'mixture', 'Distribution is not mixture F_a and the formula for theta_A4 is based on the mixture F_a distribution'
+        assert self.dist == 'mixture' or 'trunc_mixture', 'Distribution is not mixture F_a and the formula for theta_A4 is based on the mixture F_a distribution'
         return brentq(lambda x: self.elasticity_density_mix(x) + ((1 + (self.rho - 1) * self.beta)/(1-self.beta)), self.theta_n(), self.grid_max- 1e-2)
+         
+    def theta_star(self):
+        'Returns theta^* from Corollary 3, the threshold up to which the truncated Pareto is log-convex and after which it is log-concave'
+        assert self.dist == 'trunc_pareto', 'Distribution is not truncated Pareto and the formula for theta^* is based on the truncated Pareto'
+        return self.theta_bar/((self.gamma+1)**(1/self.gamma))
     
-    def elasticity_density_mix(self, theta):
-        'Returns the elasticity of the pdf of the mixture distribution F_a'
-        assert self.dist == 'mixture', 'Distribution is not F_a'
-        return - (1-self.a_mixture) * self.gamma * self.invElasticity(theta) - 1/self.invElasticity(theta)
-     
 # Allocations
     # pointwise definition
     def discretionary(self, theta):
