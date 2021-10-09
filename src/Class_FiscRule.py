@@ -220,7 +220,7 @@ class FiscRule ():
     # pointwise definition
     def tight_cap(self):
         'Returns g_c'
-        assert self.beta * self.rho * max(self.invElasticity(self.theta_grid)) <= self.beta * self.rho - self.beta, 'Deficit bias is not high.'
+        #assert self.beta * self.rho * max(self.invElasticity(self.theta_grid)) <= self.beta * self.rho - self.beta, 'Deficit bias is not high.'
         A = self.omega + self.R * self.T
         if self.dist == 'exponential':
             E_theta = expon.mean(scale = 1/self.lambda_exp, loc = self.grid_min)
