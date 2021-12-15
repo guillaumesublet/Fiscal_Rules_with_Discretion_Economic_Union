@@ -1,4 +1,4 @@
-# Fiscal_Rules_with_Discretion
+# Fiscal_Rules_with_Discretion_Economic_Union
 This repository contains the code to compute the examples in Section 5 of the following paper: 
 
 Guillaume Sublet (2021) "Fiscal Rules with Discretion".
