@@ -7,8 +7,8 @@ The code is in [Python](https://www.python.org).
 Structure of the repository:
 ----------------------------
 * `src` contains the source code which defines the class Class_FiscRule.py
-* `Execution_small_open_economy.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 1
-* `Execution_economic_union.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 2
+* `Execution_non_financial_sanctions.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 1
+* `Execution_financial_sanctions.ipynb` is a Jupyter notebook that runs Class_FiscRule.py to produce Figure 2
 * `output` contains the figures produced by running the `Execution_...` codes
 
 To run the code:
