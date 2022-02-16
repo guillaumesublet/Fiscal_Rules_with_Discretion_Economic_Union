@@ -150,9 +150,9 @@ class FiscRule ():
         'Returns theta_x the threshold below which the non-prohibitive sanctions are not meted out, i.e. exemption'
         return brentq(lambda x: self.func_for_theta_x(x), self.grid_min, self.grid_max*3/5)
 
-    def theta_A4_exp(self):
-        'Returns theta_A4 the threshold in Assumption A4 when the distribution is exponential'
-        assert self.dist == 'exponential', 'Distribution is not exponential and the formula for theta_A4 is based on the exponential distribution'
+    def theta_L_exp(self):
+        'Returns theta_L the threshold in Assumption L when the distribution is exponential'
+        assert self.dist == 'exponential', 'Distribution is not exponential and the formula for theta_L is based on the exponential distribution'
         return (1/self.lambda_exp) * ((1 + (self.rho - 1) * self.beta)/(1-self.beta))
 
     def elasticity_density_mix(self, theta):
@@ -160,9 +160,9 @@ class FiscRule ():
         assert self.dist == 'mixture' or 'trunc_mixture', 'Distribution is not F_a'
         return - (1-self.a_mixture) * self.gamma * self.invElasticity(theta) - 1/self.invElasticity(theta)
     
-    def theta_A4_mix(self):
-        'Returns theta_A4 the threshold in Assumption A4 when the distribution is F_a'
-        assert self.dist == 'mixture' or 'trunc_mixture', 'Distribution is not mixture F_a and the formula for theta_A4 is based on the mixture F_a distribution'
+    def theta_L_mix(self):
+        'Returns theta_L the threshold in Assumption L when the distribution is F_a'
+        assert self.dist == 'mixture' or 'trunc_mixture', 'Distribution is not mixture F_a and the formula for theta_L is based on the mixture F_a distribution'
         return brentq(lambda x: self.elasticity_density_mix(x) + ((1 + (self.rho - 1) * self.beta)/(1-self.beta)), self.theta_n(), self.grid_max- 1e-2)
          
     def theta_star(self):
