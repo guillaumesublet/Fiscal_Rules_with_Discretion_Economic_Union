@@ -1,6 +1,6 @@
 # Fiscal_Rules_with_Discretion_Economic_Union
 This repository contains the code to compute the examples in Section 4 of the following paper: 
-Guillaume Sublet (2021) "Fiscal Rules with Discretion for an Economic Union".
+Guillaume Sublet (2022) "Fiscal Rules with Discretion for an Economic Union".
 
 The code is in [Python](https://www.python.org).
 
